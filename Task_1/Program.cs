@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 //задание 2
@@ -8,21 +9,31 @@ namespace Task_1
     {
         static void Main(string[] args)
         {
-            string line;
+            string line = Console.ReadLine();
             char[] charsEnglish = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+            char[] chars = line.ToCharArray();
             string wrongChars = "";
+            Dictionary<char, int> charCount = new Dictionary<char, int>();
 
 
-            line = Console.ReadLine();
-
-
-            char[] inputLine = line.ToCharArray();
-
-            foreach (char c in inputLine)
+            foreach (char c in chars)
             {
                 if (!charsEnglish.Contains(c))
                 {
                     wrongChars += c + " ";
+                }
+            }
+
+
+            foreach (char c in chars)
+            {
+                if (charCount.ContainsKey(c))
+                {
+                    charCount[c]++;
+                }
+                else
+                {
+                    charCount.Add(c, 1);
                 }
             }
 
@@ -34,12 +45,13 @@ namespace Task_1
 
             else
             {
+
                 if ((line.Length % 2) == 0)
                 {
                     Console.WriteLine("Четное. Количество: " + line.Length);
 
-                    string str1 = line.Substring(0, line.Length / 2);
-                    string str2 = line.Substring(line.Length / 2, line.Length / 2);
+                    var str1 = line.Substring(0, line.Length / 2);
+                    var str2 = line.Substring(line.Length / 2, line.Length / 2);
 
 
                     char[] charArray1 = str1.ToCharArray();
@@ -51,7 +63,6 @@ namespace Task_1
                     string s1 = new string(charArray1);
                     string s2 = new string(charArray2);
                     Console.WriteLine(s1 + s2);
-                    return;
                 }
                 else
                 {
@@ -63,9 +74,16 @@ namespace Task_1
                     string a1 = new string(charArray1);
 
                     Console.WriteLine(a1 + line);
-                    return;
+                    
 
 
+                }
+                Console.WriteLine("----------------------");
+
+
+                foreach (KeyValuePair<char, int> kvp in charCount)
+                {
+                    Console.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
                 }
             }
         }
